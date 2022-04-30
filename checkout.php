@@ -1,12 +1,4 @@
-<?php
-include 'admin/db_connect.php';
-// var_dump($_SESSION);
-$chk = $conn->query("SELECT * FROM cart where user_id = {$_SESSION['login_user_id']} ")->num_rows;
-if($chk <= 0){
-    echo "<script>alert('You don\'t have an Item in your cart yet.'); location.replace('./')</script>";
-}
-?>
-  <header class="masthead">
+    <header class="masthead">
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10 align-self-end mb-4 page-title">
@@ -18,10 +10,11 @@ if($chk <= 0){
             </div>
         </div>
     </header>
+    <section class="page-section mb-2" id="">
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <form action="" id="checkout-frm">
+                <form action="" id="checkout">
                     <h4>Confirm Delivery Information</h4>
                     <div class="form-group">
                         <label for="" class="control-label">Firstname</label>
@@ -45,32 +38,33 @@ if($chk <= 0){
                     </div>  
 
                     <div class="text-center">
-                        <button class="btn btn-block btn-outline-primary">Place Order</button>
+                        <button class="btn btn-block btn-outline-primary">Confirm</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script>
+</section>
+<script>
+    
     $(document).ready(function(){
-          $('#checkout-frm').submit(function(e){
+        $('#checkout').submit(function(e){
             e.preventDefault()
-          
-            start_load()
+
+            star_load()
             $.ajax({
-                url:"admin/ajax.php?action=save_order",
+                url:"ajax.php?action=save_order",
                 method:'POST',
-                data:$(this).serialize(),
+                data:$(this).serialize();
                 success:function(resp){
                     if(resp==1){
                         alert_toast("Order successfully Placed.")
-                        setTimeout(function(){
+                        setTimout(function(){
                             location.replace('index.php?page=home')
-                        },1500)
+                        })
                     }
                 }
             })
         })
-        })
-    </script>
+    })
+</script>
